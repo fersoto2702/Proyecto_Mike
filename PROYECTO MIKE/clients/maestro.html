@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Maestro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Todos los estilos originales se mantienen igual */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --accent: #8b5cf6;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --gray-dark: #1f2937;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --bg-light: #f3f4f6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 50%, #e0e7ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%);
+            opacity: 0.6;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .avatar i {
+            color: var(--primary);
+            font-size: 36px;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .content {
+            padding: 24px;
+        }
+        
+        .summary-box {
+            background-color: #f0f9ff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            margin-bottom: 10px;
+        }
+        
+        .summary-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            color: var(--gray);
+        }
+        
+        .summary-item i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .menu-section {
+            margin-bottom: 24px;
+        }
+        
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            border: none;
+            margin-bottom: 12px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn i {
+            margin-right: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+        }
+        
+        .btn-accent:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, var(--accent) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #d97706 0%, var(--warning) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .btn-dark {
+            background: linear-gradient(135deg, var(--gray-dark) 0%, #111827 100%);
+        }
+        
+        .btn-dark:hover {
+            background: linear-gradient(135deg, #111827 0%, var(--gray-dark) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .badge {
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50px;
+            font-size: 12px;
+            padding: 3px 8px;
+            margin-left: 8px;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .quick-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f9fafb;
+            border-radius: 10px;
+            padding: 14px 10px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+        }
+        
+        .quick-btn:hover {
+            background-color: #f3f4f6;
+            transform: translateY(-2px);
+        }
+        
+        .quick-btn i {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .quick-btn span {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .quick-btn .icon-primary {
+            color: var(--primary);
+        }
+        
+        .quick-btn .icon-success {
+            color: var(--secondary);
+        }
+        
+        .quick-btn .icon-accent {
+            color: var(--accent);
+        }
+        
+        .quick-btn .icon-gray {
+            color: var(--gray);
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: var(--gray-light);
+            margin: 24px 0;
+        }
+        
+        /* Ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+        
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+        
+        /* Notificación */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            transform: translateX(calc(100% + 40px));
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            background-color: #ebf5ff;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .notification-content {
+            flex-grow: 1;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--gray-dark);
+        }
+        
+        .notification-message {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .close-notification {
+            color: var(--gray);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .title {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .btn {
+                padding: 12px;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notificación -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">
+            <i class="fas fa-bell"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Recordatorio</div>
+            <div class="notification-message">Tienes una reunión con padres de familia a las 15:00.</div>
+        </div>
+        <button class="close-notification" onclick="closeNotification()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="container fade-in">
+        <!-- Header con avatar -->
+        <div class="header">
+            <div class="header-decoration"></div>
+            <div class="avatar">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h1 class="title">Bienvenido, Maestro</h1>
+            <p class="subtitle">Gestiona tus clases y actividades académicas</p>
+        </div>
+        
+        <!-- Contenido principal modificado -->
+        <div class="content">
+            <!-- Resumen del día actualizado -->
+            <div class="summary-box">
+                <h3 class="summary-title">Resumen del día</h3>
+                <div class="summary-item">
+                    <i class="far fa-calendar-alt"></i>
+                    <span id="fecha-actual"></span>
+                </div>
+                <div class="summary-item">
+                    <i class="far fa-clock"></i>
+                    <span id="hora-actual"></span>
+                </div>
+            </div>
+
+            <!-- Horario del Grupo Único -->
+            <div class="menu-section">
+                <button class="btn btn-primary ripple" onclick="toggleHorario()">
+                    <i class="far fa-calendar-alt"></i> Horario Grupo 403
+                </button>
+                <div id="horario-container" style="display: none; margin-top: 15px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: #f3f4f6;">
+                                <th style="padding: 10px; text-align: left;">Materia</th>
+                                <th style="padding: 10px; text-align: left;">Horario</th>
+                                <th style="padding: 10px; text-align: left;">Aula</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="padding: 8px;">Innovación de Procesos con NTIC</td><td style="padding: 8px;">06:00 - 07:00</td><td style="padding: 8px;">Aula 20</td></tr>
+                            <tr><td style="padding: 8px;">Innovación de Procesos con NTIC</td><td style="padding: 8px;">06:00 - 07:00</td><td style="padding: 8px;">Aula 20</td></tr>
+                            <tr><td style="padding: 8px;">Innovación de Procesos con NTIC</td><td style="padding: 8px;">06:00 - 07:00</td><td style="padding: 8px;">Aula 20</td></tr>
+                            <tr><td style="padding: 8px;">Innovación de Procesos con NTIC</td><td style="padding: 8px;">06:00 - 07:00</td><td style="padding: 8px;">Aula 20</td></tr>
+                            <tr><td style="padding: 8px;">Innovación de Procesos con NTIC</td><td style="padding: 8px;">06:00 - 07:00</td><td style="padding: 8px;">Aula 20</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Lista de Asistencia -->
+            <div class="menu-section">
+                <h3 style="margin-bottom: 15px; color: var(--gray-dark);">Asistencia Grupo 403</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <thead>
+                        <tr style="background-color: #f3f4f6;">
+                            <th style="padding: 10px; text-align: left;">Estudiante</th>
+                            <th style="padding: 10px; text-align: center;">Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-asistencia">
+                        <!-- Los datos se cargan dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Botón de cerrar sesión -->
+            <div class="divider"></div>
+            <button class="btn btn-dark ripple" onclick="cerrarSesion()">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Funciones para fecha y hora en tiempo real
+        function actualizarHora() {
+            const fecha = new Date();
+            const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const opcionesHora = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            
+            document.getElementById('fecha-actual').textContent = fecha.toLocaleDateString('es-ES', opcionesFecha);
+            document.getElementById('hora-actual').textContent = fecha.toLocaleTimeString('es-ES', opcionesHora);
+        }
+
+        // Toggle para mostrar/ocultar horario
+        function toggleHorario() {
+            const container = document.getElementById('horario-container');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Cargar lista de asistencia
+        function cargarAsistencia() {
+            const estudiantes = [
+                "Alvarez Verdugo Rafael",
+                "Armenta Enriquez Edwin Alonso",
+                "Bojorquez Sepulveda Erick David",
+                "Cabanillas Cota José Antonio",
+                "Garcia Leal Carlos Antonio",
+                "Garcia Serrano Alberto Wenceslao",
+                "Gonzalez Lopez Juan Carlos de Jesus",
+                "Guitierrez Alvarez Jose Carlos",
+                "Infante Torres Jose Rodrigo",
+                "Longoria Peraza Luis Eduardo",
+                "Lugo Rodriguez Christian Jose",
+                "Pacheco Valenzuela Brayan Fernando",
+                "Peinado Perez Esgard David",
+                "Soto Ledesma Fernando Daniel",
+                "Soto Martinez Ana María",
+                "Vazquez Alvarado Jesus Eduardo",
+                "Villalobos Fonseca Jesus Abraham",
+            ];
+            
+            const tbody = document.getElementById('lista-asistencia');
+            tbody.innerHTML = estudiantes.map(estudiante => `
+                <tr>
+                    <td style="padding: 8px;">${estudiante}</td>
+                    <td style="text-align: center; padding: 8px;">
+                        <input type="checkbox">
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarHora();
+            setInterval(actualizarHora, 1000);
+            cargarAsistencia();
+        });
+            
+
+
+        // Función para cerrar sesión
+        function cerrarSesion() {
+            if (confirm("¿Estás seguro que deseas cerrar sesión?")) {
+                showNotification('Cerrando sesión', 'Cerrando tu sesión, por favor espera...');
+                setTimeout(function() {
+                    localStorage.removeItem("token");
+                    window.location.href = "index.html";
+                }, 1500);
+            }
+        }
+
+        // Funciones para las notificaciones
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            const notificationTitle = notification.querySelector('.notification-title');
+            const notificationMessage = notification.querySelector('.notification-message');
+            
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            notification.classList.add('show');
+            
+            // Ocultar la notificación después de 5 segundos
+            setTimeout(function() {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.remove('show');
+        }
+    </script>
+</body>
+</html>
